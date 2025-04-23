@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+
+    <title>Loja de Jogos</title>
+    <script src="/static/scripts.js"></script>
+    <style>
+        .cart {
+            position: relative;
+            display: inline-block;
+        }
+
+        .cart-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        .cart-dropdown.hidden {
+            display: none;
+        }
+
+        .cart-dropdown ul {
+            list-style: none;
+            padding: 10px;
+            margin: 0;
+        }
+
+        .cart-dropdown ul li {
+            padding: 5px 0;
+        }
+
+        .tab {
+            cursor: pointer;
+            padding: 10px;
+            display: inline-block;
+            border: 1px solid #ddd;
+            margin-right: 5px;
+            background-color: #35424a; /* Cor escura para combinar com o cabeçalho */
+            color: white; /* Cor do texto */
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .tab:hover {
+            background-color: #2c2c2c; /* Cor um pouco mais escura ao passar o mouse */
+        }
+
+        .game-item {
+            background: #ffffff;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            padding: 10px;
+            width: 30%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            text-align: center;
+        }
+
+        .game-item img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button onclick="toggleTheme()">Alternar Tema</button>
+        <h1>Bem-vindo à Loja de Jogos</h1>
+        <nav>
+            <ul>
+                <li><a href="#" class="tab active" onclick="switchTab('games')">Jogos</a></li>
+                <li><a href="#" class="tab" onclick="switchTab('cart')">Carrinho (<span id="cart-count">0</span>)</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="games-section">
+            <h2>Jogos em Destaque</h2>
+            <div class="game-list">
+                <div class="game-item">
+                    <img src="/static/imagens/produto1.jpg" alt="Imagem 1" onerror="this.onerror=null; this.src='/static/imagens/placeholder.jpg';">
+                    <h3>Imagem 1</h3>
+                    <p>Descrição resumida da Imagem 1.</p>
+                    <div class="item-actions">
+                        <button onclick="addToCart('Imagem 1')" class="tab">Adicionar ao Carrinho</button>
+                        <a href="/produto/1" class="view-details">Ver Detalhes</a>
+                    </div>
+                </div>
+                <div class="game-item">
+                    <img src="/static/imagens/produto2.jpg" alt="Imagem 2" onerror="this.onerror=null; this.src='/static/imagens/placeholder.jpg';">
+                    <h3>Imagem 2</h3>
+                    <p>Descrição resumida da Imagem 2.</p>
+                    <div class="item-actions">
+                        <button onclick="addToCart('Imagem 2')" class="tab">Adicionar ao Carrinho</button>
+                        <a href="/produto/2" class="view-details">Ver Detalhes</a>
+                    </div>
+                </div>
+                <div class="game-item">
+                    <img src="/static/imagens/produto3.jpg" alt="Imagem 3" onerror="this.onerror=null; this.src='/static/imagens/placeholder.jpg';">
+                    <h3>Imagem 3</h3>
+                    <p>Descrição resumida da Imagem 3.</p>
+                    <div class="item-actions">
+                        <button onclick="addToCart('Imagem 3')" class="tab">Adicionar ao Carrinho</button>
+                        <a href="/produto/3" class="view-details">Ver Detalhes</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="cart-section" style="display: none;">
+            <h2>Itens no Carrinho</h2>
+            <div id="cart-items">
+                <ul id="cart-item-list">Nenhum item no carrinho.</ul>
+                <button onclick="clearCart()" class="clear-cart">Limpar Carrinho</button>
+                
+                <div id="checkout-section" style="display: none; margin-top: 20px;">
+                    <h3>Finalizar Compra</h3>
+                    <form id="checkout-form">
+                        <div style="margin-bottom: 10px;">
+                            <label for="name">Nome:</label>
+                            <input type="text" id="name" required style="width: 100%; padding: 8px;">
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" required style="width: 100%; padding: 8px;">
+                        </div>
+                        <div style="margin-bottom: 10px;">
+                            <label for="address">Endereço:</label>
+                            <textarea id="address" required style="width: 100%; padding: 8px;"></textarea>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <h4>Resumo do Pedido</h4>
+                            <div id="order-summary"></div>
+                        </div>
+                        <button type="submit" class="add-to-cart" style="width: 100%;">Finalizar Compra</button>
+                    </form>
+                </div>
+                
+                <button id="checkout-btn" class="add-to-cart" onclick="showCheckout()" style="margin-top: 10px; width: 100%;">Ir para Pagamento</button>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Loja de Jogos. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
